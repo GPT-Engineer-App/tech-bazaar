@@ -6,10 +6,10 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [products, setProducts] = useState([
-    { id: 1, name: "Product 1", category: "Category 1", price: "$299.99", image: "/images/product1.jpg" },
-    { id: 2, name: "Product 2", category: "Category 2", price: "$399.99", image: "/images/product2.jpg" },
-    { id: 3, name: "Product 3", category: "Category 1", price: "$499.99", image: "/images/product3.jpg" },
-    { id: 4, name: "Product 4", category: "Category 3", price: "$599.99", image: "/images/product4.jpg" },
+    { id: 1, name: "Ultra HD 4K TV", category: "Category 1", price: "$299.99", image: "/images/product1.jpg" },
+    { id: 2, name: "Wireless Noise-Cancelling Headphones", category: "Category 2", price: "$399.99", image: "/images/product2.jpg" },
+    { id: 3, name: "Smart Home Speaker", category: "Category 1", price: "$499.99", image: "/images/product3.jpg" },
+    { id: 4, name: "Portable Bluetooth Speaker", category: "Category 3", price: "$599.99", image: "/images/product4.jpg" },
   ]);
 
   const handleSearch = (event) => {
