@@ -1,7 +1,29 @@
-import { Box, Container, VStack, Text, Image, Grid, GridItem, Heading, Link, Flex, Spacer, HStack, Button } from "@chakra-ui/react";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { useState } from "react";
+import { Box, Container, VStack, Text, Image, Grid, GridItem, Heading, Link, Flex, Spacer, HStack, Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { FaFacebook, FaTwitter, FaInstagram, FaSearch } from "react-icons/fa";
 
 const Index = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([
+    { id: 1, name: "Product 1", category: "Category 1", price: "$299.99", image: "/images/product1.jpg" },
+    { id: 2, name: "Product 2", category: "Category 2", price: "$399.99", image: "/images/product2.jpg" },
+    { id: 3, name: "Product 3", category: "Category 1", price: "$499.99", image: "/images/product3.jpg" },
+    { id: 4, name: "Product 4", category: "Category 3", price: "$599.99", image: "/images/product4.jpg" },
+  ]);
+
+  const handleSearch = (event) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+    const filtered = products.filter(product =>
+      product.name.toLowerCase().includes(query) ||
+      product.category.toLowerCase().includes(query)
+    );
+    setFilteredProducts(filtered);
+  };
+
+  const productsToDisplay = searchQuery ? filteredProducts : products;
+
   return (
     <Container maxW="container.xl" p={0}>
       {/* Navigation Bar */}
@@ -14,6 +36,14 @@ const Index = () => {
           <Link href="#" _hover={{ textDecoration: "none", color: "blue.300" }}>About Us</Link>
           <Link href="#" _hover={{ textDecoration: "none", color: "blue.300" }}>Contact</Link>
         </HStack>
+        <InputGroup maxW="400px" ml={4}>
+          <Input
+            placeholder="Search products..."
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+          <InputRightElement children={<FaSearch color="gray.300" />} />
+        </InputGroup>
       </Flex>
 
       {/* Hero Section */}
@@ -28,42 +58,17 @@ const Index = () => {
       <Box as="section" p={10}>
         <Heading size="lg" mb={6} textAlign="center">Our Products</Heading>
         <Grid templateColumns="repeat(auto-fit, minmax(240px, 1fr))" gap={6}>
-          <GridItem>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-              <Image src="/images/product1.jpg" alt="Product 1" />
-              <Box p={4}>
-                <Heading size="md">Product 1</Heading>
-                <Text mt={2}>$299.99</Text>
+          {productsToDisplay.map(product => (
+            <GridItem key={product.id}>
+              <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
+                <Image src={product.image} alt={product.name} />
+                <Box p={4}>
+                  <Heading size="md">{product.name}</Heading>
+                  <Text mt={2}>{product.price}</Text>
+                </Box>
               </Box>
-            </Box>
-          </GridItem>
-          <GridItem>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-              <Image src="/images/product2.jpg" alt="Product 2" />
-              <Box p={4}>
-                <Heading size="md">Product 2</Heading>
-                <Text mt={2}>$399.99</Text>
-              </Box>
-            </Box>
-          </GridItem>
-          <GridItem>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-              <Image src="/images/product3.jpg" alt="Product 3" />
-              <Box p={4}>
-                <Heading size="md">Product 3</Heading>
-                <Text mt={2}>$499.99</Text>
-              </Box>
-            </Box>
-          </GridItem>
-          <GridItem>
-            <Box borderWidth="1px" borderRadius="lg" overflow="hidden">
-              <Image src="/images/product4.jpg" alt="Product 4" />
-              <Box p={4}>
-                <Heading size="md">Product 4</Heading>
-                <Text mt={2}>$599.99</Text>
-              </Box>
-            </Box>
-          </GridItem>
+            </GridItem>
+          ))}
         </Grid>
       </Box>
 
